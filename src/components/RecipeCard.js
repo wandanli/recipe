@@ -54,10 +54,10 @@ const RecipeCard = ({ recipe }) => {
           {recipe["recipe"]["label"]}
         </Heading>
         <Paragraph margin="0 0 8px 0">
-          Cautions: {recipe["recipe"]["cautions"]}
+          Cautions: {recipe["recipe"]["cautions"].join(", ")}
         </Paragraph>
         <Paragraph margin="0 0 8px 0">
-          Calories: {recipe["recipe"]["calories"]}
+          Calories: {recipe["recipe"]["calories"].toFixed(2)}
         </Paragraph>
         <Paragraph margin="0 0 8px 0">
           Total Time: {recipe["recipe"]["totalTime"]}
