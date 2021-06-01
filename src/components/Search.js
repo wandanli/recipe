@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import RecipeCard from "./RecipeCard";
 import styled from "styled-components";
-import { Wrapper, Heading, MaxWidthBreakpoints } from "../style/globalStyle";
+import {
+  Wrapper,
+  Heading,
+  MaxWidthBreakpoints,
+  Button,
+} from "../style/globalStyle";
 
 const Input = styled.input`
   display: block;
@@ -24,10 +29,16 @@ const Input = styled.input`
 const Search = () => {
   const [search, setSearch] = useState("");
   const [recipes, setRecipes] = useState([]);
-
-  const updateSearch = (e) => {
-    setSearch(e.target.value);
-  };
+  const [diet, setDiet] = useState("balanced");
+  const [dietOptions] = useState([
+    "balanced",
+    "high-fiber",
+    "high-protein",
+    "low-carb",
+    "low-fat",
+    "low-sodium",
+  ]);
+  const [mealType] = useState(["Breakfast", "Lunch", "Dinner", "Snack"]);
 
   const YOUR_APP_ID = `ee9e203c`;
   const YOUR_APP_KEY = "192f9138c18a3585a19ba1067b12fdee";
@@ -41,6 +52,7 @@ const Search = () => {
           q: search,
           app_id: YOUR_APP_ID,
           app_key: YOUR_APP_KEY,
+          diet: diet,
         },
       });
       setRecipes(result.data.hits);
@@ -50,10 +62,22 @@ const Search = () => {
     }
   };
 
+  const updateSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
+  const updateDiet = (e) => {
+    setDiet(e.target.value);
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     getRecipes();
   };
+
+  useEffect(() => {
+    getRecipes();
+  }, [diet]);
 
   return (
     <>
@@ -67,6 +91,11 @@ const Search = () => {
             value={search}
             onChange={updateSearch}
           ></Input>
+          <select value={diet} onChange={updateDiet}>
+            {dietOptions.map((item, index) => (
+              <option value={item}>{item}</option>
+            ))}
+          </select>
         </form>
       </Wrapper>
       <Wrapper>
