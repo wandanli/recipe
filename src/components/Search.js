@@ -30,6 +30,8 @@ const Search = () => {
   const [search, setSearch] = useState("");
   const [recipes, setRecipes] = useState([]);
   const [diet, setDiet] = useState("balanced");
+  const [mealType, setMealType] = useState("breakfast");
+  const [cuisineType, setCuisineType] = useState("Asian");
   const [dietOptions] = useState([
     "balanced",
     "high-fiber",
@@ -38,7 +40,27 @@ const Search = () => {
     "low-fat",
     "low-sodium",
   ]);
-  const [mealType] = useState(["Breakfast", "Lunch", "Dinner", "Snack"]);
+  const [mealTypeOptions] = useState(["breakfast", "lunch", "dinner", "snack"]);
+  const [cuisineTypeOptions] = useState([
+    "American",
+    "Asian",
+    "British",
+    "Caribbean",
+    "Central Europe",
+    "Chinese",
+    "Eastern Europe",
+    "French",
+    "Indian",
+    "Italian",
+    "Japanese",
+    "Kosher",
+    "Mediterranean",
+    "Mexican",
+    "Middle Eastern",
+    "Nordic",
+    "South American",
+    "South East Asian",
+  ]);
 
   const YOUR_APP_ID = `ee9e203c`;
   const YOUR_APP_KEY = "192f9138c18a3585a19ba1067b12fdee";
@@ -53,6 +75,8 @@ const Search = () => {
           app_id: YOUR_APP_ID,
           app_key: YOUR_APP_KEY,
           diet: diet,
+          mealType: mealType,
+          cuisineType: cuisineType,
         },
       });
       setRecipes(result.data.hits);
@@ -62,14 +86,6 @@ const Search = () => {
     }
   };
 
-  const updateSearch = (e) => {
-    setSearch(e.target.value);
-  };
-
-  const updateDiet = (e) => {
-    setDiet(e.target.value);
-  };
-
   const onSubmit = (e) => {
     e.preventDefault();
     getRecipes();
@@ -77,7 +93,7 @@ const Search = () => {
 
   useEffect(() => {
     getRecipes();
-  }, [diet]);
+  }, [diet, mealType, cuisineType]);
 
   return (
     <>
@@ -89,10 +105,37 @@ const Search = () => {
             placeholder="search..."
             type="search"
             value={search}
-            onChange={updateSearch}
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
           ></Input>
-          <select value={diet} onChange={updateDiet}>
+          <select
+            name="diet"
+            onChange={(e) => {
+              setDiet(e.target.value);
+            }}
+          >
             {dietOptions.map((item, index) => (
+              <option value={item}>{item}</option>
+            ))}
+          </select>
+          <select
+            name="meal-type"
+            onChange={(e) => {
+              setMealType(e.target.value);
+            }}
+          >
+            {mealTypeOptions.map((item, index) => (
+              <option value={item}>{item}</option>
+            ))}
+          </select>
+          <select
+            name="cuisine-type"
+            onChange={(e) => {
+              setCuisineType(e.target.value);
+            }}
+          >
+            {cuisineTypeOptions.map((item, index) => (
               <option value={item}>{item}</option>
             ))}
           </select>

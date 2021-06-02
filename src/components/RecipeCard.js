@@ -12,7 +12,8 @@ import {
 
 const StyledWrapper = styled(Wrapper)`
   position: relative;
-  height: 480px;
+  height: 500px;
+  width: 300px;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px,
     rgba(0, 0, 0, 0.07) 0px 4px 4px, rgba(0, 0, 0, 0.07) 0px 8px 8px,
@@ -29,6 +30,12 @@ const StyledImage = styled(Image)`
   box-shadow: rgba(6, 180, 154, 0.4) 0px 5px, rgba(6, 180, 154, 0.3) 0px 10px,
     rgba(6, 180, 154, 0.2) 0px 15px, rgba(6, 180, 154, 0.1) 0px 20px,
     rgba(6, 180, 154, 0.05) 0px 25px;
+`;
+
+const StyledLink = styled.a`
+  display: block;
+  position: absolute;
+  bottom: 20px;
 `;
 
 const RecipeCard = ({ recipe }) => {
@@ -53,7 +60,7 @@ const RecipeCard = ({ recipe }) => {
         <Heading h4 margin="0 0 16px 0">
           {recipe["recipe"]["label"]}
         </Heading>
-        <Paragraph margin="0 0 8px 0">
+        <Paragraph margin="0 0 8px 0" textAlign="left">
           Cautions: {recipe["recipe"]["cautions"].join(", ")}
         </Paragraph>
         <Paragraph margin="0 0 8px 0">
@@ -62,13 +69,13 @@ const RecipeCard = ({ recipe }) => {
         <Paragraph margin="0 0 8px 0">
           Total Time: {recipe["recipe"]["totalTime"]}
         </Paragraph>
-        <a
+        <StyledLink
           target="_blank"
           rel="noopener noreferrer"
           href={recipe["recipe"]["shareAs"]}
         >
           Learn More
-        </a>
+        </StyledLink>
       </Wrapper>
     </StyledWrapper>
   );
