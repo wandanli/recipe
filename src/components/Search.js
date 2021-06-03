@@ -2,12 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import RecipeCard from "./RecipeCard";
 import styled from "styled-components";
-import {
-  Wrapper,
-  Heading,
-  MaxWidthBreakpoints,
-  Button,
-} from "../style/globalStyle";
+import { Wrapper, Heading, MaxWidthBreakpoints } from "../style/globalStyle";
 
 const Input = styled.input`
   display: block;
@@ -29,10 +24,11 @@ const Input = styled.input`
 const Search = () => {
   const [search, setSearch] = useState("");
   const [recipes, setRecipes] = useState([]);
-  const [diet, setDiet] = useState("balanced");
-  const [mealType, setMealType] = useState("breakfast");
-  const [cuisineType, setCuisineType] = useState("Asian");
+  const [diet, setDiet] = useState("all");
+  const [mealType, setMealType] = useState("all");
+  const [cuisineType, setCuisineType] = useState("all");
   const [dietOptions] = useState([
+    "all",
     "balanced",
     "high-fiber",
     "high-protein",
@@ -40,8 +36,15 @@ const Search = () => {
     "low-fat",
     "low-sodium",
   ]);
-  const [mealTypeOptions] = useState(["breakfast", "lunch", "dinner", "snack"]);
+  const [mealTypeOptions] = useState([
+    "all",
+    "breakfast",
+    "lunch",
+    "dinner",
+    "snack",
+  ]);
   const [cuisineTypeOptions] = useState([
+    "all",
     "American",
     "Asian",
     "British",
@@ -62,23 +65,28 @@ const Search = () => {
     "South East Asian",
   ]);
 
-  const YOUR_APP_ID = `ee9e203c`;
-  const YOUR_APP_KEY = "192f9138c18a3585a19ba1067b12fdee";
-
-  const url = `https://api.edamam.com/search`;
-
   const getRecipes = async () => {
+    const YOUR_APP_ID = `ee9e203c`;
+    const YOUR_APP_KEY = "192f9138c18a3585a19ba1067b12fdee";
+    const url = `https://api.edamam.com/search`;
+    const params = {
+      q: search,
+      app_id: YOUR_APP_ID,
+      app_key: YOUR_APP_KEY,
+    };
+
+    if (diet !== "all") {
+      params.diet = diet;
+    }
+    if (mealType !== "all") {
+      params.mealType = mealType;
+    }
+    if (cuisineType !== "all") {
+      params.cuisineType = cuisineType;
+    }
+
     try {
-      const result = await axios.get(url, {
-        params: {
-          q: search,
-          app_id: YOUR_APP_ID,
-          app_key: YOUR_APP_KEY,
-          diet: diet,
-          mealType: mealType,
-          cuisineType: cuisineType,
-        },
-      });
+      const result = await axios.get(url, { params });
       setRecipes(result.data.hits);
       console.log(result.data.hits);
     } catch (error) {
