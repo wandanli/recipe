@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import RecipeCard from "./RecipeCard";
 import styled from "styled-components";
@@ -24,11 +24,15 @@ const Input = styled.input`
 const Search = () => {
   const [search, setSearch] = useState("");
   const [recipes, setRecipes] = useState([]);
-  const [diet, setDiet] = useState("all");
-  const [mealType, setMealType] = useState("all");
-  const [cuisineType, setCuisineType] = useState("all");
+  const [resultIndex, setResultIndex] = useState(20);
+  // add loader refrence
+  const loader = useRef(null);
+  //   const [firstLoad, setFirstLoad] = useState(true);
+  const [diet, setDiet] = useState("All");
+  const [mealType, setMealType] = useState("All");
+  const [cuisineType, setCuisineType] = useState("All");
   const [dietOptions] = useState([
-    "all",
+    "All",
     "balanced",
     "high-fiber",
     "high-protein",
@@ -37,14 +41,14 @@ const Search = () => {
     "low-sodium",
   ]);
   const [mealTypeOptions] = useState([
-    "all",
+    "All",
     "breakfast",
     "lunch",
     "dinner",
     "snack",
   ]);
   const [cuisineTypeOptions] = useState([
-    "all",
+    "All",
     "American",
     "Asian",
     "British",
@@ -73,15 +77,16 @@ const Search = () => {
       q: search,
       app_id: YOUR_APP_ID,
       app_key: YOUR_APP_KEY,
+      to: resultIndex,
     };
 
-    if (diet !== "all") {
+    if (diet !== "All") {
       params.diet = diet;
     }
-    if (mealType !== "all") {
+    if (mealType !== "All") {
       params.mealType = mealType;
     }
-    if (cuisineType !== "all") {
+    if (cuisineType !== "All") {
       params.cuisineType = cuisineType;
     }
 
@@ -101,7 +106,39 @@ const Search = () => {
 
   useEffect(() => {
     getRecipes();
-  }, [diet, mealType, cuisineType]);
+  }, [diet, mealType, cuisineType, resultIndex]);
+
+  useEffect(() => {
+    if (search === "") {
+      setDiet("All");
+      setMealType("All");
+      setCuisineType("All");
+      getRecipes();
+    }
+  }, [search]);
+
+  useEffect(() => {
+    var options = {
+      root: null,
+      rootMargin: "20px",
+      threshold: 1.0,
+    };
+    // initialize IntersectionObserver
+    // and attaching to Load More div
+    const observer = new IntersectionObserver(handleObserver, options);
+    if (loader.current) {
+      observer.observe(loader.current);
+    }
+  }, []);
+
+  // here we handle what happens when user scrolls to Load More div
+  // in this case we just update page variable
+  const handleObserver = (entities) => {
+    const target = entities[0];
+    if (target.isIntersecting) {
+      setResultIndex((resultIndex) => resultIndex + 10);
+    }
+  };
 
   return (
     <>
@@ -119,6 +156,7 @@ const Search = () => {
           ></Input>
           <select
             name="diet"
+            value={diet}
             onChange={(e) => {
               setDiet(e.target.value);
             }}
@@ -129,6 +167,7 @@ const Search = () => {
           </select>
           <select
             name="meal-type"
+            value={mealType}
             onChange={(e) => {
               setMealType(e.target.value);
             }}
@@ -139,6 +178,7 @@ const Search = () => {
           </select>
           <select
             name="cuisine-type"
+            value={cuisineType}
             onChange={(e) => {
               setCuisineType(e.target.value);
             }}
@@ -154,6 +194,8 @@ const Search = () => {
           recipes.map((recipe) => {
             return <RecipeCard recipe={recipe} />;
           })}
+        {/* {recipes.length !== 0 ? <div ref={loader}>load more</div> : null} */}
+        <div ref={loader}></div>
       </Wrapper>
     </>
   );
