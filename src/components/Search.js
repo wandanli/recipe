@@ -33,19 +33,19 @@ const Search = () => {
   const [cuisineType, setCuisineType] = useState("All");
   const [dietOptions] = useState([
     "All",
-    "balanced",
-    "high-fiber",
-    "high-protein",
-    "low-carb",
-    "low-fat",
-    "low-sodium",
+    "Balanced",
+    "High-fiber",
+    "High-protein",
+    "Low-carb",
+    "Low-fat",
+    "Low-sodium",
   ]);
   const [mealTypeOptions] = useState([
     "All",
-    "breakfast",
-    "lunch",
-    "dinner",
-    "snack",
+    "Breakfast",
+    "Lunch",
+    "Dinner",
+    "Snack",
   ]);
   const [cuisineTypeOptions] = useState([
     "All",
