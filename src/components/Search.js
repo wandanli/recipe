@@ -2,23 +2,52 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import RecipeCard from "./RecipeCard";
 import styled from "styled-components";
-import { Wrapper, Heading, MaxWidthBreakpoints } from "../style/globalStyle";
+import {
+  Wrapper,
+  Heading,
+  MaxWidthBreakpoints,
+  Container,
+  Button,
+  Paragraph,
+} from "../style/globalStyle";
+import { FaSearch } from "react-icons/fa";
+
+const StyledButton = styled(Button)`
+  width: 40px;
+  height: 40px;
+  margin-left: 20px;
+  padding-top: 6px;
+  background: ${(props) => props.theme.color.secondary};
+  border-radius: 20px;
+  font-size: ${(props) => props.theme.fontSize.xLarge};
+  color: ${(props) => props.theme.color.white};
+`;
 
 const Input = styled.input`
   display: block;
-  width: 100%;
-  margin-top: 20px;
   padding: 10px 20px;
   font-size: ${(props) => props.theme.fontSize.xLarge};
   color: ${(props) => props.theme.color.primary};
-  border: 1px solid ${(props) => props.theme.color.primary};
-  border-radius: 8px;
+  border: 1px solid ${(props) => props.theme.color.secondary};
+  border-radius: 20px;
   :focus {
     outline: none;
   }
   @media ${MaxWidthBreakpoints.small} {
     width: 80%;
   } ;
+`;
+
+const Label = styled.label`
+  margin-bottom: 10px;
+  font-size: ${(props) => props.theme.fontSize.large};
+  font-weight: ${(props) => props.theme.fontWeight.bold}; ;
+`;
+
+const Select = styled.select`
+  padding: 6px;
+  border: 1px solid ${(props) => props.theme.color.greyDark};
+  border-radius: 4px;
 `;
 
 const Search = () => {
@@ -141,53 +170,92 @@ const Search = () => {
   };
 
   return (
-    <>
-      <Wrapper flexDirection="column" margin="20px">
-        <Heading primary>Recipe</Heading>
+    <Container>
+      <Wrapper margin="20px" flexJC="space-between">
+        <Wrapper width="60%" flexDirection="column" flexAI="flex-start">
+          <Heading h1 margin="20px 0">
+            Delicious Recipe
+          </Heading>
+          <Paragraph large margin="0 0 40px 0" textAlign="left">
+            Make getting dinner on the table a breeze with these easy recipe
+            ideas, which are sure to please the whole family.
+          </Paragraph>
 
-        <form onSubmit={onSubmit}>
-          <Input
-            placeholder="search..."
-            type="search"
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-            }}
-          ></Input>
-          <select
-            name="diet"
-            value={diet}
-            onChange={(e) => {
-              setDiet(e.target.value);
-            }}
-          >
-            {dietOptions.map((item, index) => (
-              <option value={item}>{item}</option>
-            ))}
-          </select>
-          <select
-            name="meal-type"
-            value={mealType}
-            onChange={(e) => {
-              setMealType(e.target.value);
-            }}
-          >
-            {mealTypeOptions.map((item, index) => (
-              <option value={item}>{item}</option>
-            ))}
-          </select>
-          <select
-            name="cuisine-type"
-            value={cuisineType}
-            onChange={(e) => {
-              setCuisineType(e.target.value);
-            }}
-          >
-            {cuisineTypeOptions.map((item, index) => (
-              <option value={item}>{item}</option>
-            ))}
-          </select>
-        </form>
+          <form onSubmit={onSubmit} id="searchForm">
+            <Wrapper flexJC="flex-start" flexAI="center">
+              <Input
+                placeholder="search..."
+                type="search"
+                value={search}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                }}
+              ></Input>
+              <StyledButton onClick={onSubmit}>
+                <FaSearch />
+              </StyledButton>
+            </Wrapper>
+            <Wrapper width="500px" flexJC="space-between">
+              <Wrapper
+                flexDirection="column"
+                flexAI="flex-start"
+                margin="40px 0"
+              >
+                <Label for="diet">Diet</Label>
+                <Select
+                  name="diet"
+                  id="diet"
+                  value={diet}
+                  onChange={(e) => {
+                    setDiet(e.target.value);
+                  }}
+                >
+                  {dietOptions.map((item, index) => (
+                    <option value={item.toLowerCase()}>{item}</option>
+                  ))}
+                </Select>
+              </Wrapper>
+              <Wrapper
+                flexDirection="column"
+                flexAI="flex-start"
+                margin="40px 0"
+              >
+                <Label for="mealType">Meal Type</Label>
+                <Select
+                  name="meal-type"
+                  id="mealType"
+                  value={mealType}
+                  onChange={(e) => {
+                    setMealType(e.target.value);
+                  }}
+                >
+                  {mealTypeOptions.map((item, index) => (
+                    <option value={item.toLowerCase()}>{item}</option>
+                  ))}
+                </Select>
+              </Wrapper>
+              <Wrapper
+                flexDirection="column"
+                flexAI="flex-start"
+                margin="40px 0"
+              >
+                <Label for="cuisineType">Cuisine Type</Label>
+                <Select
+                  name="cuisine-type"
+                  id="cuisineType"
+                  value={cuisineType}
+                  onChange={(e) => {
+                    setCuisineType(e.target.value);
+                  }}
+                >
+                  {cuisineTypeOptions.map((item, index) => (
+                    <option value={item.toLowerCase()}>{item}</option>
+                  ))}
+                </Select>
+              </Wrapper>
+            </Wrapper>
+          </form>
+        </Wrapper>
       </Wrapper>
       <Wrapper>
         {recipes !== [] &&
@@ -197,7 +265,7 @@ const Search = () => {
         {/* {recipes.length !== 0 ? <div ref={loader}>load more</div> : null} */}
         <div ref={loader}></div>
       </Wrapper>
-    </>
+    </Container>
   );
 };
 

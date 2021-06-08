@@ -36,6 +36,7 @@ export const Wrapper = styled.div`
   flex-wrap: ${(props) => props.flexWrap || "wrap"};
   justify-content: ${(props) => props.flexJC || "center"};
   align-items: ${(props) => props.flexAI || "center"};
+  width: ${(props) => props.width || ""};
   margin: ${(props) => props.margin || ""};
 `;
 
