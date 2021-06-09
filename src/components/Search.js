@@ -22,13 +22,17 @@ const StyledButton = styled(Button)`
   border-radius: 20px;
   font-size: ${(props) => props.theme.fontSize.xLarge};
   color: ${(props) => props.theme.color.white};
+  opacity: 0.7;
+  :hover {
+    opacity: 1;
+  }
 `;
 
 const Input = styled.input`
   display: block;
   padding: 10px 20px;
   font-size: ${(props) => props.theme.fontSize.xLarge};
-  color: ${(props) => props.theme.color.primary};
+  color: ${(props) => props.theme.color.secondary};
   border: 1px solid ${(props) => props.theme.color.secondary};
   border-radius: 20px;
   :focus {
@@ -40,15 +44,10 @@ const Input = styled.input`
 `;
 
 const Label = styled.label`
+  width: 180px;
   margin-bottom: 10px;
   font-size: ${(props) => props.theme.fontSize.large};
   font-weight: ${(props) => props.theme.fontWeight.bold}; ;
-`;
-
-const Select = styled.select`
-  padding: 6px;
-  border: 1px solid ${(props) => props.theme.color.greyDark};
-  border-radius: 4px;
 `;
 
 const Search = () => {
@@ -113,10 +112,10 @@ const Search = () => {
     if (diet.toLowerCase() !== "all") {
       params.diet = diet;
     }
-    if (mealType !== "All") {
+    if (mealType.toLowerCase() !== "all") {
       params.mealType = mealType;
     }
-    if (cuisineType !== "All") {
+    if (cuisineType.toLowerCase() !== "all") {
       params.cuisineType = cuisineType;
     }
 
@@ -174,6 +173,14 @@ const Search = () => {
     setDiet(value.toLowerCase());
   };
 
+  const handleMealTypeChange = (value) => {
+    setMealType(value.toLowerCase());
+  };
+
+  const handleCuisineTypeChange = (value) => {
+    setCuisineType(value.toLowerCase());
+  };
+
   return (
     <Container>
       <Wrapper margin="20px" flexJC="space-between">
@@ -181,7 +188,7 @@ const Search = () => {
           <Heading h1 margin="20px 0">
             Delicious Recipe
           </Heading>
-          <Paragraph large margin="0 0 40px 0" textAlign="left">
+          <Paragraph large margin="0 0 70px 0" textAlign="left">
             Make getting dinner on the table a breeze with these easy recipe
             ideas, which are sure to please the whole family.
           </Paragraph>
@@ -200,64 +207,23 @@ const Search = () => {
                 <FaSearch />
               </StyledButton>
             </Wrapper>
-            <Wrapper width="500px" flexJC="space-between">
-              <Wrapper
-                flexDirection="column"
-                flexAI="flex-start"
-                margin="40px 0"
-              >
-                <Label for="diet">Diet</Label>
+            <Wrapper width="600px" flexDirection="column" margin="60px 0">
+              <Wrapper width="100%" flexJC="space-between">
+                <Label>Diet</Label>
+                <Label>Meal Type</Label>
+                <Label>Cuisine Type</Label>
+              </Wrapper>
+
+              <Wrapper width="100%" flexJC="space-between" flexAI="flex-start">
                 <Dropdown options={dietOptions} onChange={handleDietChange} />
-                {/* <Select
-                  name="diet"
-                  id="diet"
-                  value={diet}
-                  onChange={(e) => {
-                    setDiet(e.target.value);
-                  }}
-                >
-                  {dietOptions.map((item, index) => (
-                    <option value={item.toLowerCase()}>{item}</option>
-                  ))}
-                </Select> */}
-              </Wrapper>
-              <Wrapper
-                flexDirection="column"
-                flexAI="flex-start"
-                margin="40px 0"
-              >
-                <Label for="mealType">Meal Type</Label>
-                <Select
-                  name="meal-type"
-                  id="mealType"
-                  value={mealType}
-                  onChange={(e) => {
-                    setMealType(e.target.value);
-                  }}
-                >
-                  {mealTypeOptions.map((item, index) => (
-                    <option value={item.toLowerCase()}>{item}</option>
-                  ))}
-                </Select>
-              </Wrapper>
-              <Wrapper
-                flexDirection="column"
-                flexAI="flex-start"
-                margin="40px 0"
-              >
-                <Label for="cuisineType">Cuisine Type</Label>
-                <Select
-                  name="cuisine-type"
-                  id="cuisineType"
-                  value={cuisineType}
-                  onChange={(e) => {
-                    setCuisineType(e.target.value);
-                  }}
-                >
-                  {cuisineTypeOptions.map((item, index) => (
-                    <option value={item.toLowerCase()}>{item}</option>
-                  ))}
-                </Select>
+                <Dropdown
+                  options={mealTypeOptions}
+                  onChange={handleMealTypeChange}
+                />
+                <Dropdown
+                  options={cuisineTypeOptions}
+                  onChange={handleCuisineTypeChange}
+                />
               </Wrapper>
             </Wrapper>
           </form>
