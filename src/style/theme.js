@@ -4,9 +4,9 @@ const theme = {
   color: {
     primary: "#55b56a",
     secondary: "#e4544f",
-    greyLight: "#f5f5f5",
+    greyLight: "#F2F2F2",
     greyDark: "#c2c2c2",
-    black: "#4c4c4c",
+    black: "#121721",
     white: "#ffff",
     lightGreen: "#8ec13f",
     orange: "#f7ba4a",

@@ -11,12 +11,14 @@ const HeaderWrapper = styled.div`
   align-items: center;
   border: 1px solid ${(props) => props.theme.color.greyDark};
   border-radius: 10px 10px 0 0;
+  background-color: ${(props) => props.theme.color.white};
 `;
 
 const OptionsWrapper = styled.div`
   padding: 5px;
   border: 1px solid ${(props) => props.theme.color.greyDark};
   display: ${(props) => (props.open ? "block" : "none")};
+  background-color: ${(props) => props.theme.color.white};
 `;
 
 const ItemWrapper = styled.div`

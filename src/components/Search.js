@@ -12,6 +12,9 @@ import {
 } from "../style/globalStyle";
 import { FaSearch } from "react-icons/fa";
 import Dropdown from "./Dropdown";
+import WaveUp from "../images/wave-up.svg";
+import WaveBottom from "../images/wave-bottom.svg";
+import FoodImg from "../images/food.jpeg";
 
 const StyledButton = styled(Button)`
   width: 40px;
@@ -47,7 +50,30 @@ const Label = styled.label`
   width: 180px;
   margin-bottom: 10px;
   font-size: ${(props) => props.theme.fontSize.large};
-  font-weight: ${(props) => props.theme.fontWeight.bold}; ;
+  font-weight: ${(props) => props.theme.fontWeight.bold};
+`;
+
+const Span = styled.span`
+  background: linear-gradient(to top, #f2b5b3 30%, transparent 50%);
+`;
+
+const HeaderBg = styled.div`
+  width: 100vw;
+  height: 540px;
+  background-color: #fff9f4;
+  background-image: url(${WaveUp}), url(${WaveBottom});
+  background-repeat: no-repeat;
+  background-position: left -40px, left bottom;
+  /* color: ${(props) => props.theme.color.primary}; */
+`;
+
+const ImageWrapper = styled(Wrapper)`
+  width: 380px;
+  height: 500px;
+  background-image: url(${FoodImg});
+  background-repeat: no-repeat;
+  background-size: contain;
+  clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
 `;
 
 const Search = () => {
@@ -182,62 +208,76 @@ const Search = () => {
   };
 
   return (
-    <Container>
-      <Wrapper margin="20px" flexJC="space-between">
-        <Wrapper width="60%" flexDirection="column" flexAI="flex-start">
-          <Heading h1 margin="20px 0">
-            Delicious Recipe
-          </Heading>
-          <Paragraph large margin="0 0 70px 0" textAlign="left">
-            Make getting dinner on the table a breeze with these easy recipe
-            ideas, which are sure to please the whole family.
-          </Paragraph>
+    <HeaderBg>
+      <Container>
+        <Wrapper margin="20px" flexJC="space-between" flexAI="flex-start">
+          <Wrapper width="60%" flexDirection="column" flexAI="flex-start">
+            <Heading h1 margin="20px 0">
+              Delicious Recipe
+            </Heading>
+            <Paragraph large margin="0 0 70px 0" textAlign="left">
+              Make getting dinner on the table a breeze with these easy recipe
+              ideas, which are sure to please the whole family.
+            </Paragraph>
 
-          <form onSubmit={onSubmit} id="searchForm">
-            <Wrapper flexJC="flex-start" flexAI="center">
-              <Input
-                placeholder="search..."
-                type="search"
-                value={search}
-                onChange={(e) => {
-                  setSearch(e.target.value);
-                }}
-              ></Input>
-              <StyledButton onClick={onSubmit}>
-                <FaSearch />
-              </StyledButton>
-            </Wrapper>
-            <Wrapper width="600px" flexDirection="column" margin="60px 0">
-              <Wrapper width="100%" flexJC="space-between">
-                <Label>Diet</Label>
-                <Label>Meal Type</Label>
-                <Label>Cuisine Type</Label>
+            <form onSubmit={onSubmit} id="searchForm">
+              <Wrapper flexJC="flex-start" flexAI="center">
+                <Input
+                  placeholder="search..."
+                  type="search"
+                  value={search}
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                  }}
+                ></Input>
+                <StyledButton onClick={onSubmit}>
+                  <FaSearch />
+                </StyledButton>
               </Wrapper>
+              <Wrapper width="600px" flexDirection="column" margin="60px 0">
+                <Wrapper width="100%" flexJC="space-between">
+                  <Label>
+                    <Span>Diet</Span>
+                  </Label>
+                  <Label>
+                    <Span>Meal Type</Span>
+                  </Label>
+                  <Label>
+                    <Span>Cuisine Type</Span>
+                  </Label>
+                </Wrapper>
 
-              <Wrapper width="100%" flexJC="space-between" flexAI="flex-start">
-                <Dropdown options={dietOptions} onChange={handleDietChange} />
-                <Dropdown
-                  options={mealTypeOptions}
-                  onChange={handleMealTypeChange}
-                />
-                <Dropdown
-                  options={cuisineTypeOptions}
-                  onChange={handleCuisineTypeChange}
-                />
+                <Wrapper
+                  width="100%"
+                  flexJC="space-between"
+                  flexAI="flex-start"
+                >
+                  <Dropdown options={dietOptions} onChange={handleDietChange} />
+                  <Dropdown
+                    options={mealTypeOptions}
+                    onChange={handleMealTypeChange}
+                  />
+                  <Dropdown
+                    options={cuisineTypeOptions}
+                    onChange={handleCuisineTypeChange}
+                  />
+                </Wrapper>
               </Wrapper>
-            </Wrapper>
-          </form>
+            </form>
+          </Wrapper>
+          <ImageWrapper></ImageWrapper>
         </Wrapper>
-      </Wrapper>
-      <Wrapper>
-        {recipes !== [] &&
-          recipes.map((recipe) => {
-            return <RecipeCard recipe={recipe} />;
-          })}
-        {/* {recipes.length !== 0 ? <div ref={loader}>load more</div> : null} */}
-        <div ref={loader}></div>
-      </Wrapper>
-    </Container>
+
+        <Wrapper>
+          {recipes !== [] &&
+            recipes.map((recipe) => {
+              return <RecipeCard recipe={recipe} />;
+            })}
+          {/* {recipes.length !== 0 ? <div ref={loader}>load more</div> : null} */}
+          <div ref={loader}></div>
+        </Wrapper>
+      </Container>
+    </HeaderBg>
   );
 };
 
