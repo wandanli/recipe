@@ -11,6 +11,7 @@ import {
   Paragraph,
 } from "../style/globalStyle";
 import { FaSearch } from "react-icons/fa";
+import Dropdown from "./Dropdown";
 
 const StyledButton = styled(Button)`
   width: 40px;
@@ -109,7 +110,7 @@ const Search = () => {
       to: resultIndex,
     };
 
-    if (diet !== "All") {
+    if (diet.toLowerCase() !== "all") {
       params.diet = diet;
     }
     if (mealType !== "All") {
@@ -169,6 +170,10 @@ const Search = () => {
     }
   };
 
+  const handleDietChange = (value) => {
+    setDiet(value.toLowerCase());
+  };
+
   return (
     <Container>
       <Wrapper margin="20px" flexJC="space-between">
@@ -202,7 +207,8 @@ const Search = () => {
                 margin="40px 0"
               >
                 <Label for="diet">Diet</Label>
-                <Select
+                <Dropdown options={dietOptions} onChange={handleDietChange} />
+                {/* <Select
                   name="diet"
                   id="diet"
                   value={diet}
@@ -213,7 +219,7 @@ const Search = () => {
                   {dietOptions.map((item, index) => (
                     <option value={item.toLowerCase()}>{item}</option>
                   ))}
-                </Select>
+                </Select> */}
               </Wrapper>
               <Wrapper
                 flexDirection="column"
