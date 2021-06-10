@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { BiUpArrow } from "react-icons/bi";
 
@@ -35,7 +35,7 @@ const StyledBiUpArrow = styled(BiUpArrow)`
   transition: all 0.4s ease-in-out;
 `;
 
-const Dropdown = ({ options, onChange }) => {
+const Dropdown = ({ options, onChange, search }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [items] = useState(options);
   const [selectedItem, setSelectedItem] = useState("All");
@@ -47,6 +47,12 @@ const Dropdown = ({ options, onChange }) => {
     setIsOpen(false);
     onChange(e.currentTarget.textContent);
   };
+
+  useEffect(() => {
+    if (search === "") {
+      setSelectedItem("All");
+    }
+  }, [search]);
 
   return (
     <div>

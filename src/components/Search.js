@@ -172,10 +172,13 @@ const Search = () => {
 
   useEffect(() => {
     if (search === "") {
-      setDiet("All");
-      setMealType("All");
-      setCuisineType("All");
-      getRecipes();
+      if (diet === "All" && mealType === "All" && cuisineType === "All") {
+        getRecipes();
+      } else {
+        setDiet("All");
+        setMealType("All");
+        setCuisineType("All");
+      }
     }
   }, [search]);
 
@@ -265,14 +268,17 @@ const Search = () => {
                     <Dropdown
                       options={dietOptions}
                       onChange={handleDietChange}
+                      search={search}
                     />
                     <Dropdown
                       options={mealTypeOptions}
                       onChange={handleMealTypeChange}
+                      search={search}
                     />
                     <Dropdown
                       options={cuisineTypeOptions}
                       onChange={handleCuisineTypeChange}
+                      search={search}
                     />
                   </Wrapper>
                 </Wrapper>
