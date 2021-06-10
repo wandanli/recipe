@@ -17,6 +17,7 @@ const HeaderWrapper = styled.div`
 const OptionsWrapper = styled.div`
   padding: 5px;
   border: 1px solid ${(props) => props.theme.color.greyDark};
+  border-top: 0px;
   display: ${(props) => (props.open ? "block" : "none")};
   background-color: ${(props) => props.theme.color.white};
 `;

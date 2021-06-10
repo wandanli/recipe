@@ -76,6 +76,11 @@ const ImageWrapper = styled(Wrapper)`
   clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
 `;
 
+const RecipesWrapper = styled(Wrapper)`
+  background-color: #fafff4;
+  border-radius: 10px;
+`;
+
 const Search = () => {
   const [search, setSearch] = useState("");
   const [recipes, setRecipes] = useState([]);
@@ -268,14 +273,14 @@ const Search = () => {
           <ImageWrapper></ImageWrapper>
         </Wrapper>
 
-        <Wrapper>
+        <RecipesWrapper margin="120px 0">
           {recipes !== [] &&
             recipes.map((recipe) => {
               return <RecipeCard recipe={recipe} />;
             })}
           {/* {recipes.length !== 0 ? <div ref={loader}>load more</div> : null} */}
           <div ref={loader}></div>
-        </Wrapper>
+        </RecipesWrapper>
       </Container>
     </HeaderBg>
   );
