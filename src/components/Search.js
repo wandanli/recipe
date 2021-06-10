@@ -15,6 +15,7 @@ import Dropdown from "./Dropdown";
 import WaveUp from "../images/wave-up.svg";
 import WaveBottom from "../images/wave-bottom.svg";
 import FoodImg from "../images/food.jpeg";
+import ScrollToTop from "./ScrollToTop";
 
 const StyledButton = styled(Button)`
   width: 40px;
@@ -213,76 +214,83 @@ const Search = () => {
   };
 
   return (
-    <HeaderBg>
-      <Container>
-        <Wrapper margin="20px" flexJC="space-between" flexAI="flex-start">
-          <Wrapper width="60%" flexDirection="column" flexAI="flex-start">
-            <Heading h1 margin="20px 0">
-              Delicious Recipe
-            </Heading>
-            <Paragraph large margin="0 0 70px 0" textAlign="left">
-              Make getting dinner on the table a breeze with these easy recipe
-              ideas, which are sure to please the whole family.
-            </Paragraph>
+    <>
+      <HeaderBg>
+        <Container>
+          <Wrapper margin="20px" flexJC="space-between" flexAI="flex-start">
+            <Wrapper width="60%" flexDirection="column" flexAI="flex-start">
+              <Heading h1 margin="20px 0">
+                Delicious Recipe
+              </Heading>
+              <Paragraph large margin="0 0 70px 0" textAlign="left">
+                Make getting dinner on the table a breeze with these easy recipe
+                ideas, which are sure to please the whole family.
+              </Paragraph>
 
-            <form onSubmit={onSubmit} id="searchForm">
-              <Wrapper flexJC="flex-start" flexAI="center">
-                <Input
-                  placeholder="search..."
-                  type="search"
-                  value={search}
-                  onChange={(e) => {
-                    setSearch(e.target.value);
-                  }}
-                ></Input>
-                <StyledButton onClick={onSubmit}>
-                  <FaSearch />
-                </StyledButton>
-              </Wrapper>
-              <Wrapper width="600px" flexDirection="column" margin="60px 0">
-                <Wrapper width="100%" flexJC="space-between">
-                  <Label>
-                    <Span>Diet</Span>
-                  </Label>
-                  <Label>
-                    <Span>Meal Type</Span>
-                  </Label>
-                  <Label>
-                    <Span>Cuisine Type</Span>
-                  </Label>
+              <form onSubmit={onSubmit} id="searchForm">
+                <Wrapper flexJC="flex-start" flexAI="center">
+                  <Input
+                    autoFocus
+                    placeholder="search..."
+                    type="search"
+                    value={search}
+                    onChange={(e) => {
+                      setSearch(e.target.value);
+                    }}
+                  ></Input>
+                  <StyledButton onClick={onSubmit}>
+                    <FaSearch />
+                  </StyledButton>
                 </Wrapper>
+                <Wrapper width="600px" flexDirection="column" margin="60px 0">
+                  <Wrapper width="100%" flexJC="space-between">
+                    <Label>
+                      <Span>Diet</Span>
+                    </Label>
+                    <Label>
+                      <Span>Meal Type</Span>
+                    </Label>
+                    <Label>
+                      <Span>Cuisine Type</Span>
+                    </Label>
+                  </Wrapper>
 
-                <Wrapper
-                  width="100%"
-                  flexJC="space-between"
-                  flexAI="flex-start"
-                >
-                  <Dropdown options={dietOptions} onChange={handleDietChange} />
-                  <Dropdown
-                    options={mealTypeOptions}
-                    onChange={handleMealTypeChange}
-                  />
-                  <Dropdown
-                    options={cuisineTypeOptions}
-                    onChange={handleCuisineTypeChange}
-                  />
+                  <Wrapper
+                    width="100%"
+                    flexJC="space-between"
+                    flexAI="flex-start"
+                  >
+                    <Dropdown
+                      options={dietOptions}
+                      onChange={handleDietChange}
+                    />
+                    <Dropdown
+                      options={mealTypeOptions}
+                      onChange={handleMealTypeChange}
+                    />
+                    <Dropdown
+                      options={cuisineTypeOptions}
+                      onChange={handleCuisineTypeChange}
+                    />
+                  </Wrapper>
                 </Wrapper>
-              </Wrapper>
-            </form>
+              </form>
+            </Wrapper>
+            <ImageWrapper></ImageWrapper>
           </Wrapper>
-          <ImageWrapper></ImageWrapper>
-        </Wrapper>
 
-        <RecipesWrapper margin="120px 0">
-          {recipes !== [] &&
-            recipes.map((recipe) => {
-              return <RecipeCard recipe={recipe} />;
-            })}
-          {/* {recipes.length !== 0 ? <div ref={loader}>load more</div> : null} */}
-          <div ref={loader}></div>
-        </RecipesWrapper>
-      </Container>
-    </HeaderBg>
+          <RecipesWrapper margin="120px 0">
+            {recipes !== [] &&
+              recipes.map((recipe) => {
+                return <RecipeCard recipe={recipe} />;
+              })}
+            {/* {recipes.length !== 0 ? <div ref={loader}>load more</div> : null} */}
+            <div ref={loader}></div>
+          </RecipesWrapper>
+        </Container>
+      </HeaderBg>
+      <ScrollToTop />
+    </>
   );
 };
 
