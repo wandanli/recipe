@@ -16,6 +16,7 @@ import WaveUp from "../images/wave-up.svg";
 import WaveBottom from "../images/wave-bottom.svg";
 import FoodImg from "../images/food.jpeg";
 import ScrollToTop from "./ScrollToTop";
+import GithubLink from "./GithubLink";
 
 const StyledButton = styled(Button)`
   width: 40px;
@@ -215,6 +216,7 @@ const Search = () => {
 
   return (
     <>
+      <GithubLink />
       <HeaderBg>
         <Container>
           <Wrapper margin="20px" flexJC="space-between" flexAI="flex-start">
