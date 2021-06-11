@@ -23,7 +23,7 @@ const StyledWrapper = styled(Wrapper)`
   background-position: bottom;
   background-repeat: no-repeat;
   @media (max-width: 330px) {
-    height: 600px;
+    height: 660px;
     font-size: ${(props) => props.theme.fontSize.small};
   }
 `;
