@@ -14,7 +14,8 @@ import { FaSearch } from "react-icons/fa";
 import Dropdown from "./Dropdown";
 import WaveUp from "../images/wave-up.svg";
 import WaveBottom from "../images/wave-bottom.svg";
-import FoodImg from "../images/food.jpeg";
+import FoodImg from "../images/food.png";
+import HFoodImg from "../images/food-2.png";
 import ScrollToTop from "./ScrollToTop";
 import GithubLink from "./GithubLink";
 
@@ -44,12 +45,13 @@ const Input = styled.input`
     outline: none;
   }
   @media ${MaxWidthBreakpoints.small} {
-    width: 80%;
+    width: 70%;
+    font-size: ${(props) => props.theme.fontSize.medium};
   } ;
 `;
 
 const Label = styled.label`
-  width: 180px;
+  width: 100%;
   margin-bottom: 10px;
   font-size: ${(props) => props.theme.fontSize.large};
   font-weight: ${(props) => props.theme.fontWeight.bold};
@@ -66,27 +68,107 @@ const HeaderBg = styled.div`
   background-image: url(${WaveUp}), url(${WaveBottom});
   background-repeat: no-repeat;
   background-position: left -40px, left bottom;
+  @media ${MaxWidthBreakpoints.small} {
+    height: 800px;
+  }
   /* color: ${(props) => props.theme.color.primary}; */
 `;
 
+const HeaderWrapper = styled(Wrapper)`
+  @media ${MaxWidthBreakpoints.large} {
+    display: block;
+  }
+  @media ${MaxWidthBreakpoints.medium} {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+`;
+
 const ImageWrapper = styled(Wrapper)`
-  width: 380px;
+  width: 40%;
   height: 500px;
   background-image: url(${FoodImg});
   background-repeat: no-repeat;
   background-size: contain;
-  clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+  background-position: bottom right;
+  @media ${MaxWidthBreakpoints.large} {
+    /* background-color: black; */
+    background-size: cover;
+    background-position: 0 -172px;
+    /* display: block; */
+    background-image: url(${HFoodImg});
+    /* background-position: top right; */
+    width: 398px;
+    height: 234px;
+    position: absolute;
+    top: 90px;
+    right: 80px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  }
+  @media ${MaxWidthBreakpoints.medium} {
+    display: none;
+  }
+`;
+
+const ContentWrapper = styled(Wrapper)`
+  @media ${MaxWidthBreakpoints.large} {
+    margin: 40px 20px;
+    width: 90%;
+  }
+  @media ${MaxWidthBreakpoints.small} {
+    margin: 10px 0;
+    width: 100%;
+  }
 `;
 
 const RecipesWrapper = styled(Wrapper)`
   background-color: #fafff4;
   border-radius: 10px;
+  @media ${MaxWidthBreakpoints.small} {
+    margin: 60px 0;
+  }
+`;
+
+const Form = styled.form`
+  width: 100%;
+`;
+
+const StyledParagraph = styled(Paragraph)`
+  @media ${MaxWidthBreakpoints.large} {
+    width: 60%;
+    z-index: 1;
+  }
+  @media ${MaxWidthBreakpoints.medium} {
+    width: 100%;
+  }
+  @media ${MaxWidthBreakpoints.small} {
+    margin-bottom: 30px;
+  }
+`;
+
+const SelectWrapper = styled(Wrapper)`
+  margin-top: 30px;
+  @media ${MaxWidthBreakpoints.medium} {
+    margin-top: 0;
+  }
+
+  @media ${MaxWidthBreakpoints.small} {
+    width: 100%;
+    display: block;
+  }
+`;
+
+const SearchBarWrapper = styled(Wrapper)`
+  @media ${MaxWidthBreakpoints.small} {
+    justify-content: space-between;
+  }
 `;
 
 const Search = () => {
   const [search, setSearch] = useState("");
   const [recipes, setRecipes] = useState([]);
   const [resultIndex, setResultIndex] = useState(20);
+  const [errorMessage, setErrorMessage] = useState("");
   // add loader refrence
   const loader = useRef(null);
   //   const [firstLoad, setFirstLoad] = useState(true);
@@ -222,18 +304,26 @@ const Search = () => {
       <GithubLink />
       <HeaderBg>
         <Container>
-          <Wrapper margin="20px" flexJC="space-between" flexAI="flex-start">
-            <Wrapper width="60%" flexDirection="column" flexAI="flex-start">
+          <HeaderWrapper
+            margin="40px 0"
+            flexJC="space-between"
+            flexAI="flex-start"
+          >
+            <ContentWrapper
+              width="58%"
+              flexDirection="column"
+              flexAI="flex-start"
+            >
               <Heading h1 margin="20px 0">
                 Delicious Recipe
               </Heading>
-              <Paragraph large margin="0 0 70px 0" textAlign="left">
+              <StyledParagraph large margin="0 0 70px 0" textAlign="left">
                 Make getting dinner on the table a breeze with these easy recipe
                 ideas, which are sure to please the whole family.
-              </Paragraph>
+              </StyledParagraph>
 
-              <form onSubmit={onSubmit} id="searchForm">
-                <Wrapper flexJC="flex-start" flexAI="center">
+              <Form onSubmit={onSubmit} id="searchForm">
+                <SearchBarWrapper flexJC="flex-start" flexAI="center">
                   <Input
                     autoFocus
                     placeholder="search..."
@@ -246,46 +336,60 @@ const Search = () => {
                   <StyledButton onClick={onSubmit}>
                     <FaSearch />
                   </StyledButton>
-                </Wrapper>
-                <Wrapper width="600px" flexDirection="column" margin="60px 0">
-                  <Wrapper width="100%" flexJC="space-between">
+                </SearchBarWrapper>
+
+                <SelectWrapper
+                  width="100%"
+                  flexAI="flex-start"
+                  flexJC="space-between"
+                >
+                  <Wrapper
+                    flexDirection="column"
+                    flexAI="flex-start"
+                    margin="40px 0 0 0"
+                  >
                     <Label>
                       <Span>Diet</Span>
                     </Label>
-                    <Label>
-                      <Span>Meal Type</Span>
-                    </Label>
-                    <Label>
-                      <Span>Cuisine Type</Span>
-                    </Label>
-                  </Wrapper>
-
-                  <Wrapper
-                    width="100%"
-                    flexJC="space-between"
-                    flexAI="flex-start"
-                  >
                     <Dropdown
                       options={dietOptions}
                       onChange={handleDietChange}
                       search={search}
                     />
+                  </Wrapper>
+                  <Wrapper
+                    flexDirection="column"
+                    flexAI="flex-start"
+                    margin="40px 0 0 0"
+                  >
+                    <Label>
+                      <Span>Meal Type</Span>
+                    </Label>
                     <Dropdown
                       options={mealTypeOptions}
                       onChange={handleMealTypeChange}
                       search={search}
                     />
+                  </Wrapper>
+                  <Wrapper
+                    flexDirection="column"
+                    flexAI="flex-start"
+                    margin="40px 0 0 0"
+                  >
+                    <Label>
+                      <Span>Cuisine Type</Span>
+                    </Label>
                     <Dropdown
                       options={cuisineTypeOptions}
                       onChange={handleCuisineTypeChange}
                       search={search}
                     />
                   </Wrapper>
-                </Wrapper>
-              </form>
-            </Wrapper>
+                </SelectWrapper>
+              </Form>
+            </ContentWrapper>
             <ImageWrapper></ImageWrapper>
-          </Wrapper>
+          </HeaderWrapper>
 
           <RecipesWrapper margin="120px 0">
             {recipes !== [] &&
@@ -295,6 +399,7 @@ const Search = () => {
             {/* {recipes.length !== 0 ? <div ref={loader}>load more</div> : null} */}
             <div ref={loader}></div>
           </RecipesWrapper>
+          <p>{errorMessage}</p>
         </Container>
       </HeaderBg>
       <ScrollToTop />

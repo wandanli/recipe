@@ -127,14 +127,14 @@ export const Button = styled.button`
 
 export const MinWidthBreakpoints = {
   small: `(min-width: 480px)`,
-  medium: `(min-width: 768px)`,
+  medium: `(min-width: 930px)`,
   large: `(min-width: 1140px)`,
   xLarge: `(min-width: 1500px)`,
 };
 
 export const MaxWidthBreakpoints = {
   small: `(max-width: 479px)`,
-  medium: `(max-width: 767px)`,
+  medium: `(max-width: 850px)`,
   large: `(max-width: 1139px)`,
   xLarge: `(max-width: 1499px)`,
 };

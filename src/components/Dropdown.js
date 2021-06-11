@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { BiUpArrow } from "react-icons/bi";
+import { MaxWidthBreakpoints } from "../style/globalStyle";
 
 const HeaderWrapper = styled.div`
-  width: 180px;
   padding: 14px;
   cursor: pointer;
   display: flex;
@@ -20,6 +20,7 @@ const OptionsWrapper = styled.div`
   border-top: 0px;
   display: ${(props) => (props.open ? "block" : "none")};
   background-color: ${(props) => props.theme.color.white};
+  font-size: ${(props) => props.theme.fontSize.small};
 `;
 
 const ItemWrapper = styled.div`
@@ -33,6 +34,17 @@ const ItemWrapper = styled.div`
 const StyledBiUpArrow = styled(BiUpArrow)`
   transform: ${(props) => (props.open ? "rotateX(180deg)" : "rotateX(0)")};
   transition: all 0.4s ease-in-out;
+`;
+
+const Span = styled.span`
+  padding-right: 10px;
+`;
+
+const Div = styled.div`
+  width: 180px;
+  @media ${MaxWidthBreakpoints.small} {
+    width: 100%;
+  }
 `;
 
 const Dropdown = ({ options, onChange, search }) => {
@@ -55,9 +67,9 @@ const Dropdown = ({ options, onChange, search }) => {
   }, [search]);
 
   return (
-    <div>
+    <Div>
       <HeaderWrapper onClick={toggleDropdown}>
-        {selectedItem}
+        <Span>{selectedItem}</Span>
         <StyledBiUpArrow open={isOpen ? true : false} />
       </HeaderWrapper>
       <OptionsWrapper open={isOpen ? true : false}>
@@ -65,7 +77,7 @@ const Dropdown = ({ options, onChange, search }) => {
           <ItemWrapper onClick={(e) => handleItemClick(e)}>{item}</ItemWrapper>
         ))}
       </OptionsWrapper>
-    </div>
+    </Div>
   );
 };
 

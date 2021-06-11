@@ -22,9 +22,10 @@ const StyledWrapper = styled(Wrapper)`
     rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
   background-position: bottom;
   background-repeat: no-repeat;
-  @media ${MaxWidthBreakpoints.small} {
-    height: 420px;
-  } ;
+  @media (max-width: 330px) {
+    height: 540px;
+    font-size: ${(props) => props.theme.fontSize.small};
+  }
 `;
 
 const StyledImage = styled(Image)`
@@ -32,6 +33,9 @@ const StyledImage = styled(Image)`
   border-radius: 10px;
   /* clip-path: circle(70% at 50% 30%); */
   /* border: 1px solid black; */
+  @media ${MaxWidthBreakpoints.small} {
+    width: 92%;
+  }
 `;
 
 const StyledLink = styled.a`
@@ -98,14 +102,14 @@ const RecipeCard = ({ recipe }) => {
           <b>Cautions:</b>&nbsp;&nbsp;
           {recipe["recipe"]["cautions"].join(", ")}
         </Paragraph>
-        <Paragraph margin="0 0 8px 0">
+        <Paragraph margin="0 0 8px 0" textAlign="left">
           <Span>
             <RiTempHotLine />
           </Span>
           <b>Calories:</b>&nbsp;&nbsp;{recipe["recipe"]["calories"].toFixed(2)}{" "}
           kcal
         </Paragraph>
-        <Paragraph margin="0 0 8px 0">
+        <Paragraph margin="0 0 8px 0" textAlign="left">
           <Span>
             <BiTimeFive />
           </Span>
