@@ -58,7 +58,8 @@ const Label = styled.label`
 `;
 
 const Span = styled.span`
-  background: linear-gradient(to top, #f2b5b3 30%, transparent 50%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 65%, #f2b5b3 65%);
+  /* background: linear-gradient(to top, #f2b5b3 30%, transparent 50%); */
 `;
 
 const HeaderBg = styled.div`

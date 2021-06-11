@@ -23,7 +23,7 @@ const StyledWrapper = styled(Wrapper)`
   background-position: bottom;
   background-repeat: no-repeat;
   @media (max-width: 330px) {
-    height: 540px;
+    height: 600px;
     font-size: ${(props) => props.theme.fontSize.small};
   }
 `;
@@ -59,6 +59,9 @@ const TextWrapper = styled(Wrapper)``;
 const SpanHeading = styled.span`
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 65%, #d6e8c0 65%);
   /* display: inline !important; */
+  @media (max-width: 330px) {
+    font-size: ${(props) => props.theme.fontSize.medium};
+  }
 `;
 
 const Span = styled.span`
