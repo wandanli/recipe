@@ -39,7 +39,7 @@ const Input = styled.input`
   padding: 10px 20px;
   font-size: ${(props) => props.theme.fontSize.xLarge};
   color: ${(props) => props.theme.color.secondary};
-  /* border: 1px solid ${(props) => props.theme.color.secondary}; */
+  border: 1px solid #e4544f;
   border-radius: 20px;
   :focus {
     outline: none;

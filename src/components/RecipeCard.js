@@ -22,14 +22,17 @@ const StyledWrapper = styled(Wrapper)`
     rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
   background-position: bottom;
   background-repeat: no-repeat;
-  @media (max-width: 330px) {
-    height: 660px;
+  @media (max-width: 730px) {
+    height: auto;
     font-size: ${(props) => props.theme.fontSize.small};
   }
 `;
 
 const StyledImage = styled(Image)`
-  margin: 10px auto;
+  display: block;
+  width: 280px;
+  height: 220px;
+  margin: 10px 10px;
   border-radius: 10px;
   /* clip-path: circle(70% at 50% 30%); */
   /* border: 1px solid black; */
@@ -40,8 +43,9 @@ const StyledImage = styled(Image)`
 
 const StyledLink = styled.a`
   display: block;
-  position: absolute;
-  bottom: 20px;
+  /* position: absolute;
+  bottom: 20px; */
+  margin: 40px 20px 20px 20px;
   padding: 8px 20px;
   background-color: ${(props) => props.theme.color.lightGreen};
   border-radius: 20px;
@@ -78,54 +82,52 @@ const RecipeCard = ({ recipe }) => {
       margin="40px 20px"
       flexDirection="column"
       flexAI="flex-start"
-      flexJC="flex-start"
+      flexJC="space-between"
     >
-      <StyledImage
-        width="280"
-        height="220"
-        alt={recipe["recipe"]["label"]}
-        src={recipe["recipe"]["image"]}
-        onError={(e) => {
-          e.target.onerror = null;
-          e.target.src = fallbackImg;
-        }}
-      ></StyledImage>
-      <TextWrapper
-        margin="20px 20px"
-        flexDirection="column"
-        flexAI="flex-start"
+      <Wrapper flexDirection="column" flexAI="flex-start">
+        <StyledImage
+          width="280"
+          height="220"
+          alt={recipe["recipe"]["label"]}
+          src={recipe["recipe"]["image"]}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = fallbackImg;
+          }}
+        ></StyledImage>
+        <TextWrapper margin="0 20px" flexDirection="column" flexAI="flex-start">
+          <Heading h3 margin="0 0 16px 0">
+            <SpanHeading>{recipe["recipe"]["label"]}</SpanHeading>
+          </Heading>
+          <Paragraph margin="0 0 8px 0" textAlign="left">
+            <Span>
+              <GrMap />
+            </Span>
+            <b>Cautions:</b>&nbsp;&nbsp;
+            {recipe["recipe"]["cautions"].join(", ")}
+          </Paragraph>
+          <Paragraph margin="0 0 8px 0" textAlign="left">
+            <Span>
+              <RiTempHotLine />
+            </Span>
+            <b>Calories:</b>&nbsp;&nbsp;
+            {recipe["recipe"]["calories"].toFixed(2)} kcal
+          </Paragraph>
+          <Paragraph margin="0 0 8px 0" textAlign="left">
+            <Span>
+              <BiTimeFive />
+            </Span>
+            <b>Total Time:</b>&nbsp;&nbsp;{recipe["recipe"]["totalTime"]} min
+          </Paragraph>
+        </TextWrapper>
+      </Wrapper>
+      <StyledLink
+        target="_blank"
+        rel="noopener noreferrer"
+        href={recipe["recipe"]["shareAs"]}
       >
-        <Heading h3 margin="0 0 16px 0">
-          <SpanHeading>{recipe["recipe"]["label"]}</SpanHeading>
-        </Heading>
-        <Paragraph margin="0 0 8px 0" textAlign="left">
-          <Span>
-            <GrMap />
-          </Span>
-          <b>Cautions:</b>&nbsp;&nbsp;
-          {recipe["recipe"]["cautions"].join(", ")}
-        </Paragraph>
-        <Paragraph margin="0 0 8px 0" textAlign="left">
-          <Span>
-            <RiTempHotLine />
-          </Span>
-          <b>Calories:</b>&nbsp;&nbsp;{recipe["recipe"]["calories"].toFixed(2)}{" "}
-          kcal
-        </Paragraph>
-        <Paragraph margin="0 0 8px 0" textAlign="left">
-          <Span>
-            <BiTimeFive />
-          </Span>
-          <b>Total Time:</b>&nbsp;&nbsp;{recipe["recipe"]["totalTime"]} min
-        </Paragraph>
-        <StyledLink
-          target="_blank"
-          rel="noopener noreferrer"
-          href={recipe["recipe"]["shareAs"]}
-        >
-          Learn More
-        </StyledLink>
-      </TextWrapper>
+        Learn More
+      </StyledLink>
     </StyledWrapper>
   );
 };
