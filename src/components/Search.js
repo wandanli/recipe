@@ -35,6 +35,10 @@ const StyledButton = styled(Button)`
 `;
 
 const Input = styled.input`
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
   display: block;
   padding: 10px 20px;
   font-size: ${(props) => props.theme.fontSize.xLarge};
